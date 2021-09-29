@@ -1,0 +1,129 @@
+{
+  "version": 2,
+  "projects": {
+    "tech-arch": {
+      "root": "apps/tech-arch",
+      "sourceRoot": "apps/tech-arch/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/tech-arch",
+            "index": "apps/tech-arch/src/index.html",
+            "main": "apps/tech-arch/src/main.tsx",
+            "polyfills": "apps/tech-arch/src/polyfills.ts",
+            "tsConfig": "apps/tech-arch/tsconfig.app.json",
+            "assets": [
+              "apps/tech-arch/src/favicon.ico",
+              "apps/tech-arch/src/assets"
+            ],
+            "styles": ["apps/tech-arch/src/styles.css"],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/tech-arch/src/environments/environment.ts",
+                  "with": "apps/tech-arch/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "tech-arch:build",
+            "hmr": true
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "tech-arch:build:production",
+              "hmr": false
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/tech-arch/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/tech-arch"],
+          "options": {
+            "jestConfig": "apps/tech-arch/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "tech-arch-e2e": {
+      "root": "apps/tech-arch-e2e",
+      "sourceRoot": "apps/tech-arch-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/tech-arch-e2e/cypress.json",
+            "devServerTarget": "tech-arch:serve",
+            "tsConfig": "apps/tech-arch-e2e/tsconfig.json"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "tech-arch:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/tech-arch-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/react"
+  },
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "style": "css",
+        "linter": "eslint",
+        "babel": true
+      },
+      "component": {
+        "style": "css"
+      },
+      "library": {
+        "style": "css",
+        "linter": "eslint"
+      }
+    }
+  },
+  "defaultProject": "tech-arch"
+}
